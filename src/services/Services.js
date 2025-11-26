@@ -5,8 +5,8 @@ class Services {
     this.model = nomeDoModel;
   }
 
-  async pegaTodosOsRegistros() {
-    return dataSource[this.model].findAll();
+  async pegaTodosOsRegistros(where = {}) {
+    return dataSource[this.model].findAll({ where: { ...where } });
   }
 
   async pegarRegistrosPorEscopo(escopo) {
@@ -21,15 +21,26 @@ class Services {
     return dataSource[this.model].findOne({ where: { ...where } });
   }
 
+  async pegaEContaRegistros(options) {
+    return dataSource[this.model].findAndCountAll({ ...options });
+  }
+
   async criaRegistro(dadosDoRegistro) {
     return dataSource[this.model].create(dadosDoRegistro);
   }
 
-  async atualizaRegistro(dadosAtualizados, where) {
+  async atualizaRegistros(dadosAtualizados, where) {
+    return dataSource[this.model].update(dadosAtualizados, {
+      where: { ...where },
+    });
+  }
+
+  async atualizaRegistro(dadosAtualizados, where, transaction = {}) {
     const listadeRegistrosAtualizados = await dataSource[this.model].update(
       dadosAtualizados,
       {
-        where: { ...where },
+        where: { ...where }, 
+        transaction: transaction,
       }
     );
     if (listadeRegistrosAtualizados[0] === 0) {
