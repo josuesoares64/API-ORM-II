@@ -1,22 +1,35 @@
-# API ORM II – Sistema de Pessoas e Matrículas (Node.js + Sequelize)
+# API ORM II – Avançando nas Funcionalidades do Sequelize (Formação Alura)
 
-Este projeto foi desenvolvido com foco em estudo/prática de ORM, camada de serviços, controllers e relacionamento entre tabelas usando **Node.js**, **Express**, **Sequelize** e **SQLite**.
+Este projeto faz parte da formação da Alura **"ORM com Node.js: avançando nas funcionalidades do Sequelize"** (Parte II).  
+O objetivo é evoluir a API criada na primeira parte do curso, implementando novas funcionalidades e aplicando recursos mais avançados do Sequelize, como escopos, transações, relacionamentos, serviços reutilizáveis e boas práticas de arquitetura.
 
 ---
 
 ## 📌 Sobre o projeto
 
-A API gerencia **Pessoas** e suas **Matrículas**, permitindo criar, listar, atualizar, excluir e cancelar registros.  
-O código segue o padrão de arquitetura em **Controllers**, **Services** e **Routes**, deixando o projeto organizado e fácil de manter.
+A API gerencia **Pessoas** e suas **Matrículas**, permitindo operações completas de CRUD, além de funcionalidades adicionais como:
+
+- Cancelar um estudante e automaticamente cancelar suas matrículas  
+- Listar matrículas ativas  
+- Listar todas as matrículas (ativas ou não)  
+- Listar pessoas com escopo customizado  
+- Organização do código em **Controllers**, **Services** e **Routes**  
+
+A arquitetura foi pensada para facilitar manutenção, testes e evolução do projeto.
 
 ---
 
-## 🚀 Tecnologias utilizadas
+## 🚀 Tecnologias e conceitos aplicados
+
 - Node.js  
 - Express  
 - Sequelize ORM  
 - SQLite  
-- Nodemon (para desenvolvimento)
+- Arquitetura MVC + camada de Services  
+- Escopos (Scopes)  
+- Operações em transações  
+- Métodos reutilizáveis na camada de serviço  
+- Soft delete com `paranoid: true`
 
 ---
 
@@ -24,39 +37,41 @@ O código segue o padrão de arquitetura em **Controllers**, **Services** e **Ro
 
 ### 👤 Pessoas
 - `GET /pessoas` → lista pessoas ativas  
-- `GET /pessoas/todos` → lista todas as pessoas  
-- `GET /pessoas/:id` → busca uma pessoa  
-- `POST /pessoas` → cria pessoa  
-- `PUT /pessoas/:id` → atualiza pessoa  
+- `GET /pessoas/todos` → lista todas as pessoas (incluindo inativas)  
+- `GET /pessoas/:id` → busca uma pessoa por ID  
+- `POST /pessoas` → cria uma nova pessoa  
+- `PUT /pessoas/:id` → atualiza dados da pessoa  
 - `DELETE /pessoas/:id` → exclui pessoa  
-- `PUT /pessoas/:estudante_id/cancela` → **cancela pessoa + matrículas vinculadas**
-
-### 🎓 Matrículas
-- `GET /pessoas/:estudante_id/matriculas`  
-- `GET /pessoas/:estudante_id/matriculas/todos`  
-- `GET /pessoas/:estudante_id/matriculas/:id`  
-- `POST /pessoas/:estudante_id/matriculas`  
-- `PUT /pessoas/:estudante_id/matriculas/:id`  
-- `DELETE /pessoas/:estudante_id/matriculas/:id`
+- `PUT /pessoas/:estudante_id/cancela` → **cancela pessoa + suas matrículas vinculadas**
 
 ---
 
-## 🧩 Estrutura do projeto (simplificada)
+### 🎓 Matrículas
+- `GET /pessoas/:estudante_id/matriculas` → matrículas ativas  
+- `GET /pessoas/:estudante_id/matriculas/todos` → todas as matrículas  
+- `GET /pessoas/:estudante_id/matriculas/:id` → matrícula específica  
+- `POST /pessoas/:estudante_id/matriculas` → cria matrícula  
+- `PUT /pessoas/:estudante_id/matriculas/:id` → atualiza matrícula  
+- `DELETE /pessoas/:estudante_id/matriculas/:id` → exclui matrícula  
+- `GET /pessoas/matriculas/lotadas` → lista de cursos com turmas lotadas  
 
-controllers/ → regras de resposta da API
-services/ → regras de negócio
-routes/ → definições das rotas
+---
+
+## 🧩 Estrutura do projeto
+
+controllers/ → lógica de entrada e saída da API
+services/ → regras de negócio e acesso ao banco
+routes/ → definição das rotas
 database/ → models, migrations e arquivo SQLite
-server.js → servidor Express
+server.js → inicialização do servidor Express
 
 
 ---
 
 ## 🧑‍💻 Autor
 **Josué Soares**  
-Desenvolvedor backend em evolução, criando projetos reais para portfólio.
+Desenvolvedor em formação, criando projetos reais para consolidar conhecimento e fortalecer o portfólio.
 
 ---
 
-## ⭐ Gostou do projeto?
-Deixe uma estrela no repositório!  
+## ⭐ Se esse projeto te ajudou, deixe uma estrela!
